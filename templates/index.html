@@ -36,7 +36,7 @@
       }
     });
 
-    socket.on('chat message', function(msg) {
+    socket.on('chatmessage_return', function(msg) {
       var item = document.createElement('li');
       item.textContent = msg;
       messages.appendChild(item);
