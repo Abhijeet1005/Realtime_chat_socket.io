@@ -6,9 +6,10 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 
 app.set("view engine","ejs");
+app.use(express.static('./public'));
 
 app.get('/',(req,res) => {
-    res.render(__dirname + '/templates/index.ejs');
+    res.render("auth");
 });
 app.post('/',(req,res) => {
   res.sendStatus(500);
