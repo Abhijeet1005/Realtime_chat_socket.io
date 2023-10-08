@@ -5,8 +5,13 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 
+app.set("view engine","ejs");
+
 app.get('/',(req,res) => {
-    res.sendFile(__dirname + '/templates/index.html')
+    res.render(__dirname + '/templates/index.ejs');
+});
+app.post('/',(req,res) => {
+  res.sendStatus(500);
 });
 
 io.on('connection', (socket) => {
