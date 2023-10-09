@@ -11,6 +11,12 @@ app.use(express.static('./public'));
 app.get('/',(req,res) => {
     res.render("auth");
 });
+app.get('/login',(req,res) => {
+    res.render("Login");
+});
+app.get('/signup',(req,res) => {
+    res.render("signup");
+});
 app.post('/',(req,res) => {
   res.sendStatus(500);
 });

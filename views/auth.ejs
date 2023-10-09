@@ -6,26 +6,20 @@
 </head>
 <body>
   <h2>Chat Authentication</h2>
-  <div class="form-container">
-    <!-- Login Form -->
-    <form id="login-form" action="/auth" method="POST">
-      <h3>Login</h3>
-      <input type="text" name="username" placeholder="Username" required>
-      <br>
-      <input type="password" name="password" placeholder="Password" required>
-      <br>
-      <button type="submit">Login</button>
-    </form>
-
-    <!-- Signup Form -->
-    <form id="signup-form" action="/" method="POST">
-      <h3>Sign Up</h3>
-      <input type="text" name="newUsername" placeholder="New Username" required>
-      <br>
-      <input type="password" name="newPassword" placeholder="New Password" required>
-      <br>
-      <button type="submit">Sign Up</button>
-    </form>
+  <div>
+    <button id="Login" onclick="Redirect_to_Login()">Login</button>
+    <button id="Sign Up" onclick="Redirect_to_Signup()">Sign Up</button>
   </div>
+  <script>
+    function Redirect_to_Login(){
+      let newURL = window.location.href + "login"
+      window.location.href = newURL;
+      };
+    function Redirect_to_Signup(){
+      let newURL = window.location.href + "signup"
+      window.location.href = newURL;
+      };
+
+  </script>
 </body>
 </html>
