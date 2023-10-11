@@ -5,7 +5,8 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 
-const users = {"Abhijeet": "password"}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
+const users = {"Abhijeet": "password","asc": "pwd"}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
+let username = '';
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -23,10 +24,12 @@ app.get('/login',(req,res) => {
 
 
 app.post('/login',(req,res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  if(users[username] == password){
+  let Username = req.body.username;
+  let password = req.body.password;
+  if(users[Username] == password){
+    
     res.redirect("chatpage");
+    
   }
   else{
     res.render("Login", { errorMessage: "Authentication failed. Please try again." });

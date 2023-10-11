@@ -6,15 +6,18 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
+    
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button><button id="Home_button" onclick="redirect_home()">Home</button>
     </form>
+
     <script src="/socket.io/socket.io.js"></script>
   <script>
 
     let socket = io();
 
+    let passedUser = "<%= passedUser %>"; 
     let messages = document.getElementById('messages');
     let form = document.getElementById('form');
     let input = document.getElementById('input');
@@ -29,7 +32,7 @@
 
     socket.on('chatmessage_return', function(msg) {
       let item = document.createElement('li');
-      item.textContent = msg;
+      item.textContent = passedUser + ': ' + msg;
       messages.appendChild(item);
       window.scrollTo(0, document.body.scrollHeight);
     });
