@@ -17,7 +17,7 @@
 
     let socket = io();
 
-    let passedUser = "<%= passedUser %>"; 
+    
     let messages = document.getElementById('messages');
     let form = document.getElementById('form');
     let input = document.getElementById('input');
@@ -32,7 +32,7 @@
 
     socket.on('chatmessage_return', function(msg) {
       let item = document.createElement('li');
-      item.textContent = passedUser + ': ' + msg;
+      item.textContent = msg;
       messages.appendChild(item);
       window.scrollTo(0, document.body.scrollHeight);
     });
