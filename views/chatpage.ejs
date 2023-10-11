@@ -18,9 +18,10 @@
     let socket = io();
 
     
-    let messages = document.getElementById('messages');
+    
     let form = document.getElementById('form');
     let input = document.getElementById('input');
+    
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -30,12 +31,21 @@
       }
     });
 
-    socket.on('chatmessage_return', function(msg) {
-      let item = document.createElement('li');
-      item.textContent = msg;
-      messages.appendChild(item);
+    socket.on('chatmessage_return', function(message_list) {
+      const messages = document.getElementById('messages'); // Get the ul element
+    
+      
+      messages.innerHTML = '';
+    
+      for (let msg of message_list) {
+        let item = document.createElement('li');
+        item.textContent = msg;
+        messages.appendChild(item);
+      }
+    
       window.scrollTo(0, document.body.scrollHeight);
     });
+    
 
     function redirect_home(){
       let newURL = "/"

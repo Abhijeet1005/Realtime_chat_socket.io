@@ -6,7 +6,8 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 
 const users = {"Abhijeet": "password","asc": "pwd"}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
-let username = '';
+
+let message_list = [];
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,20 +48,22 @@ app.get('/signup',(req,res) => {
     res.render("signup");
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
 
 io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    io.emit('chatmessage_return', msg);
+  socket.on('chat message', (message) => {
+    message_list.push(message);
+    io.emit('chatmessage_return', message_list);
   });
 });
 
 server.listen(3000,() => {
-    console.log('Listening on port 3000');
+  console.log('Listening on port 3000');
 });
 
+
+// io.on('connection', (socket) => {
+//   console.log('a user connected');
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected');
+//   });
+// });
