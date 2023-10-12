@@ -8,6 +8,7 @@ function hashPassword(plain_password,username) {
     bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash(plain_password, salt, function(err, hash) {
             users[username] = hash;
+            console.log("Hashed and stored");
         });
     });
 }
@@ -30,5 +31,5 @@ function hashPassword(plain_password,username) {
 
 
 module.exports = {
-    hashPassword,checkPassword,
+    hashPassword,
 }

@@ -3,8 +3,9 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
+const { PassThrough } = require('stream');
 const io = new Server(server);
-// const { hashPassword } = require('./utils/helpers')
+const { hashPassword } = require('./utils/helpers')
 
 const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
 
@@ -48,6 +49,18 @@ app.get('/chatpage',(req,res) => {
 
 app.get('/signup',(req,res) => {
     res.render("signup");
+});
+
+
+app.post('/signup',(req,res) => {
+    username = req.body.newUsername;
+    Password = req.body.newPassword;
+    confirmPassword = req.body.confirmPassword;
+
+    if(Password == confirmPassword){
+      hashPassword(Password,username);
+      res.redirect('login');
+    }
 });
 
 
