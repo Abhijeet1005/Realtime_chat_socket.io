@@ -4,8 +4,9 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
+// const { hashPassword } = require('./utils/helpers')
 
-const users = {"Abhijeet": "password","asc": "pwd"}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
+const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
 
 let message_list = [];
 
@@ -27,6 +28,7 @@ app.get('/login',(req,res) => {
 app.post('/login',(req,res) => {
   let Username = req.body.username;
   let password = req.body.password;
+
   if(users[Username] == password){
     
     res.redirect("chatpage");
@@ -61,9 +63,3 @@ server.listen(3000,() => {
 });
 
 
-// io.on('connection', (socket) => {
-//   console.log('a user connected');
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected');
-//   });
-// });
