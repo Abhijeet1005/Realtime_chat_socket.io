@@ -8,6 +8,9 @@
 <body>
     <div class="container">
         <h2>Sign Up</h2>
+        <% if (errorMessage) { %>
+            <p class="error-message"><%= errorMessage %></p>
+        <% } %>
         <form action="signup" method="post">
             <label for="newUsername">Username:</label>
             <input type="text" id="newUsername" name="newUsername" required>

@@ -49,7 +49,7 @@ app.get('/chatpage',(req,res) => {
 
 
 app.get('/signup',(req,res) => {
-    res.render("signup");
+    res.render("signup", {errorMessage: ''});
 });
 
 
@@ -61,6 +61,10 @@ app.post('/signup',(req,res) => {
     if(Password == confirmPassword){
       hashPassword(Password,username);
       res.redirect('login');
+    }
+
+    else{
+      res.render('signup', { errorMessage: "Passwords does not match!" })
     }
 });
 
