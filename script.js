@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const { PassThrough } = require('stream');
 const io = new Server(server);
-const { hashPassword } = require('./utils/helpers')
+const { hashPassword, checkUser } = require('./utils/helpers')
 
 const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
 
@@ -26,11 +26,12 @@ app.get('/login',(req,res) => {
 });
 
 
-app.post('/login',(req,res) => {
+app.post('/login',async (req,res) => {
   let Username = req.body.username;
   let password = req.body.password;
+  const user_check = await checkUser(Username,password) // awaits for the checkUser to verify credentials
 
-  if(users[Username] == password){
+  if(user_check){
     
     res.redirect("chatpage");
     

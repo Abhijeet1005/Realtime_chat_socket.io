@@ -15,21 +15,17 @@ function hashPassword(plain_password,username) {
 
 
 //Will be callled when the user logs in and the entered password need to be checked
-// function checkPassword(username, password, callback) {
-//     bcrypt.compare(password, users[username], function (err, result) {
-//         if (err) {
-//             // Handle any potential errors (e.g., bcrypt error)
-//             callback(err, false);
-//         } else {
-//             // Compare the result and invoke the callback
-//             callback(null, true);
-//         }
-//     });
-// }
-
-
-
+async function checkUser(username, password) {
+    if (users[username]) {
+      const hashPassword = users[username];
+      const match = await bcrypt.compare(password, hashPassword);
+      
+      return match;
+    } else {
+      return false; // If the user doesnt exist
+    }
+  }
 
 module.exports = {
-    hashPassword,
+    hashPassword,checkUser
 }
