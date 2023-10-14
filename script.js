@@ -7,7 +7,6 @@ const { PassThrough } = require('stream');
 const io = new Server(server);
 const { hashPassword, checkUser } = require('./utils/helpers')
 
-const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
 
 let message_list = [];
 
@@ -53,20 +52,19 @@ app.get('/signup',(req,res) => {
 });
 
 
-app.post('/signup',(req,res) => {
-    username = req.body.newUsername;
-    Password = req.body.newPassword;
-    confirmPassword = req.body.confirmPassword;
+app.post('/signup', async (req, res) => {
+  username = req.body.newUsername;
+  Password = req.body.newPassword;
+  confirmPassword = req.body.confirmPassword;
 
-    if(Password == confirmPassword){
-      hashPassword(Password,username);
+  if (Password == confirmPassword) {
+      await hashPassword(Password, username); // Wait for the password hashing to complete
       res.redirect('login');
-    }
-
-    else{
-      res.render('signup', { errorMessage: "Passwords does not match!" })
-    }
+  } else {
+      res.render('signup', { errorMessage: "Passwords do not match!" });
+  }
 });
+
 
 
 io.on('connection', (socket) => {
