@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
-const { storeUser } = require('./dbHandler');
+const { storeUser,fetchUser } = require('./dbHandler');
 
 const saltRounds = 10;
-const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
+// const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
 
 
 //Will be called when a new user signs up and the password needs to be hashed and stored in the database
@@ -20,14 +20,17 @@ function hashPassword(plain_password,username) {
 
 //Will be callled when the user logs in and the entered password need to be checked
 async function checkUser(username, password) {
-    if (users[username]) {
-      const hashPassword = users[username];
-      const match = await bcrypt.compare(password, hashPassword);
-      
-      return match;
-    } else {
-      return false; // If the user doesnt exist
-    }
+  data = await fetchUser(username);
+
+  if(data){
+    const match = await bcrypt.compare(password, data.hash_password);
+
+    return match;
+  }
+  else{
+    return false;
+  }
+
   }
 
 module.exports = {

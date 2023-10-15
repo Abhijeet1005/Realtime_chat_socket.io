@@ -31,7 +31,7 @@ app.post('/login',async (req,res) => {
   const user_check = await checkUser(Username,password) // awaits for the checkUser to verify credentials
 
   if(user_check){
-    
+    console.log("User founf and authenticated");
     res.redirect("chatpage");
     
   }
