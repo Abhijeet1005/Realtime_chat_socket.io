@@ -1,17 +1,19 @@
-const UserModel = require('./model'); // Correctly import UserModel from models.js
+// I know this is some bad DB code, will correct it later on
+require('dotenv').config();
+const UserModel = require('./model'); 
 const mongoose = require('mongoose');
 
 async function storeUser(user, hash) {
     try {
         // Connect to the MongoDB database
-        await mongoose.connect('mongodb://127.0.0.1:27017/chat?directConnection=true&serverSelectionTimeoutMS=2000', {
+        await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
 
         const newUser = new UserModel({ username: user, hash_password: hash });
         await newUser.save();
-        console.log('User stored successfully:');
+        console.log('User stored successfully');
     } catch (err) {
         console.error('Error storing user:', err);
     }
@@ -20,7 +22,7 @@ async function storeUser(user, hash) {
 async function fetchUser(user) {
     try {
         // Connect to the MongoDB database
-        await mongoose.connect('mongodb://127.0.0.1:27017/chat?directConnection=true&serverSelectionTimeoutMS=2000', {
+        await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
