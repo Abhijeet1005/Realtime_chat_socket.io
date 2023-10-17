@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { storeUser,fetchUser } = require('./dbHandler');
+const UserModel = require('./dbHandler');
 
 const saltRounds = 10;
 // const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
