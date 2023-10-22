@@ -9,7 +9,7 @@ const io = new Server(server);
 const { hashPassword, checkUser } = require('./utils/helpers')
 
 
-let message_list = [];
+let message_list = []; 
 
 app.use(express.urlencoded({ extended: true }));
 

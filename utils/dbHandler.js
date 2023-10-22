@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 
 async function storeUser(user, hash) {
     try {
-        // Connect to the MongoDB database
+        // Connect to the MongoDB database 
+        //This can be migrated to another file for connecting to DB instead of opening a connection on every call
         await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
@@ -22,6 +23,8 @@ async function storeUser(user, hash) {
 async function fetchUser(user) {
     try {
         // Connect to the MongoDB database
+        //This can be migrated to another file for connecting to DB instead of opening a connection on every call
+
         await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true

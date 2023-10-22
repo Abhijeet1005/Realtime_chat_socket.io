@@ -3,14 +3,14 @@ const { storeUser,fetchUser } = require('./dbHandler');
 const UserModel = require('./dbHandler');
 
 const saltRounds = 10;
-// const users = {}; // This works as a temporary solution for storing registered users and will replace it with a DB with hashed passwords later on
+
 
 
 //Will be called when a new user signs up and the password needs to be hashed and stored in the database
 function hashPassword(plain_password,username) {
     bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash(plain_password, salt, async function(err, hash) {
-            // users[username] = hash;
+            
             await storeUser(username,hash);
         });
     });
