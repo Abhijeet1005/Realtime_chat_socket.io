@@ -2,8 +2,7 @@
 
 This project uses socketio to set up a real-time chat environment.
 
-The features I plan to add are: <br />
-Database for message logging : <br />
-User IDs and authentication  : <br />
-Connecting to a public IP    : <br />
-A better UI                  :
+User IDs and authentication  : ✅ <br />
+DB for storing users:  ✅ <br />
+Bcrypt hashing for passwords: ✅ <br />
+
