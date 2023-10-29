@@ -4,17 +4,19 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
-const { PassThrough } = require('stream');
 const io = new Server(server);
 const { hashPassword, checkUser } = require('./utils/helpers')
+const { dbConnect } = require('./utils/model')
 
 
-let message_list = []; 
+let message_list = []; //This can be replaced to store the messages in DB and fetch them on reloads
 
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine","ejs");
 app.use(express.static('./public'));
+
+dbConnect()
 
 app.get('/',(req,res) => {
     res.render("auth");
@@ -32,7 +34,7 @@ app.post('/login',async (req,res) => {
   const user_check = await checkUser(Username,password) // awaits for the checkUser to verify credentials
 
   if(user_check){
-    console.log("User founf and authenticated");
+    console.log("User found and authenticated");
     res.redirect("chatpage");
     
   }

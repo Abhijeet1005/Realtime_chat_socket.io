@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { storeUser,fetchUser } = require('./dbHandler');
-const UserModel = require('./dbHandler');
+
 
 const saltRounds = 10;
 
