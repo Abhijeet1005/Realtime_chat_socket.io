@@ -6,4 +6,5 @@ User IDs and authentication  : ✅ <br />
 DB for storing users:  ✅ <br />
 Bcrypt hashing for passwords: ✅ <br />
 Added UIDs for chats : ✅ <br />
+Deployed on web (https://node-socket-chat.onrender.com): ✅ <br />
 
