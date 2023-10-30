@@ -35,7 +35,7 @@ app.post('/login',async (req,res) => {
 
   if(user_check){
     console.log("User found and authenticated");
-    res.redirect("chatpage");
+    res.redirect(`chatpage/${Username}`);
     
   }
   else{
@@ -45,8 +45,9 @@ app.post('/login',async (req,res) => {
 });
 
 
-app.get('/chatpage',(req,res) => {
-    res.render("chatpage");
+app.get('/chatpage/:username',(req,res) => {
+  let passeduser = req.params.username;
+  res.render("chatpage",{user : passeduser});
 });
 
 

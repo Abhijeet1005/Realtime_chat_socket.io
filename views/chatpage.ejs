@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RT_JS</title>
+    <title><%=user %></title>
 
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
@@ -13,11 +13,12 @@
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
+   
   <script>
 
     let socket = io();
-
-    
+    const user = "<%= user %>";
+  
     let form = document.getElementById('form');
     let input = document.getElementById('input');
     
@@ -25,7 +26,8 @@
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       if (input.value) {
-        socket.emit('chat message', input.value);
+        console.log(user)
+        socket.emit('chat message',`${user} says: ${input.value}`);
         input.value = '';
       }
     });
@@ -39,6 +41,7 @@
       for (let msg of message_list) {
         let item = document.createElement('li');
         item.textContent = msg;
+        console.log(typeof item)
         messages.appendChild(item);
       }
     
