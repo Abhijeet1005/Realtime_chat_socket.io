@@ -47,6 +47,9 @@ app.post('/login',async (req,res) => {
 
 app.get('/chatpage/:username',(req,res) => {
   let passeduser = req.params.username;
+  if(!passeduser){
+    res.redirect('login',{ errorMessage: "Wrong User" })
+  }
   res.render("chatpage",{user : passeduser});
 });
 
