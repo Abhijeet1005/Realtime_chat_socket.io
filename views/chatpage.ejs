@@ -27,7 +27,7 @@
       e.preventDefault();
       if (input.value) {
         console.log(user)
-        socket.emit('chat message',`${user} says: ${input.value}`);
+        socket.emit('chat message',`<<${user}>> ${input.value}`);
         input.value = '';
       }
     });
