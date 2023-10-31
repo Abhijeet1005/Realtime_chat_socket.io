@@ -3,23 +3,17 @@
 <head>
   <title>Authentication</title>
   <link rel="stylesheet" href="/stylesheets/auth.css">
+  <style>
+
+  </style>
 </head>
 <body>
-  <h2>Chat Authentication</h2>
-  <div>
-    <button id="Login" onclick="Redirect_to_Login()">Login</button>
-    <button id="Sign Up" onclick="Redirect_to_Signup()">Sign Up</button>
-  </div>
-  <script>
-    function Redirect_to_Login(){
-      let newURL = window.location.href + "login"
-      window.location.href = newURL;
-      };
-    function Redirect_to_Signup(){
-      let newURL = window.location.href + "signup"
-      window.location.href = newURL;
-      };
 
-  </script>
+  <p class="line-1 anim-typewriter">Chat Authentication</p>
+  <div class="wrapper">
+    
+    <a href="/login" class="fancy-button bg-gradient1"><span><i class="fa fa-ticket"></i>LOGIN</span></a>
+    <a href="/signup" class="fancy-button bg-gradient1"><span><i class="fa fa-ticket"></i>SIGNUP</span></a>
+    
 </body>
 </html>

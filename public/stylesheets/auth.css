@@ -1,41 +1,164 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  h2 {
-    margin: 1em 0 0.5em 0;
-    color: #2c0464;
-    font-weight: bold;
-    font-family: 'Ultra', sans-serif;   
-    font-size: 52px;
-    line-height: 42px;
-    text-transform: uppercase;
-    text-shadow: 0 2px white, 0 3px #140202;
-  }
-  .form-container {
-    display: inline-block;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 70px;
-    border-radius: 5px;
-    background-color: #f5f5f5;
-  }
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px 15px; /* Add padding to both sides (top/bottom, right/left) */
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 10px 20px;
-    box-shadow: 2px 4px #000;
-    cursor: pointer;
-  }
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #252839;
+  padding: 20px;
+}
 
-  /* This stylesheet needs some rework */
+
+.line-1{
+  position: relative;
+  top: 50%;  
+  width: 24em;
+  margin: 0 auto;
+  border-right: 2px solid rgba(255,255,255,.75);
+  color: #ffffff;
+  font-weight: bold;
+  font-family: 'Ultra', sans-serif;
+  font-size: 36px;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateY(-50%);    
+}
+
+/* Animation */
+.anim-typewriter{
+animation: typewriter 2s steps(44) 0.5s 1 normal both,
+           blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter{
+from{width: 0;}
+to{width: 13em;}
+}
+@keyframes blinkTextCursor{
+from{border-right-color: rgba(255,255,255,.75);}
+to{border-right-color: transparent;}
+}
+
+.bg-gradient1 span,
+.bg-gradient1:before {
+  background: #fa7e29;
+  background: linear-gradient(180deg, #fa7e29 0%, #F6682F 80%, #F6682F 100%);
+}
+
+.bg-gradient2 span,
+.bg-gradient2:before {
+  background: #39C2C9;
+  background: linear-gradient(180deg, #39C2C9 0%, #3FC8C9 80%, #3FC8C9 100%);
+}
+
+.pop-onhover.bg-gradient3 span,
+.pop-onhover.bg-gradient3:before {
+  background: #B9AEF0;
+  background: linear-gradient(180deg, #B9AEF0 0%, #ADA1EB 80%, #ADA1EB 100%);
+}
+
+.bg-gradient4 span {
+  background: #F6682F;
+  background: linear-gradient(180deg, #F6682F 0%, #F6682F 80%, #F6682F 100%);
+}
+
+/* General */
+.wrapper {
+  margin: 4% auto;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover, a:focus, a:active {
+  text-decoration: none;
+}
+
+/* fancy Button */
+.fancy-button {
+  display: inline-block;
+  margin: 20px;
+  font-family: "Heebo", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 24px;
+  color: #ffffff;
+  position: relative;
+}
+.fancy-button.bg-gradient1 {
+  text-shadow: 0px 0px 1px #BF4C28;
+}
+
+
+.fancy-button:before {
+  content: "";
+  display: inline-block;
+  height: 40px;
+  position: absolute;
+  bottom: -1px;
+  left: 10px;
+  right: 10px;
+  z-index: -1;
+  border-radius: 2em;
+  filter: blur(14px) brightness(0.9);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-out;
+}
+.fancy-button i {
+  margin-top: -2px;
+  font-size: 1.265em;
+  vertical-align: middle;
+}
+.fancy-button span {
+  display: inline-block;
+  padding: 16px 20px;
+  border-radius: 50em;
+  position: relative;
+  z-index: 2;
+  will-change: transform, filter;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-out;
+}
+.fancy-button:focus {
+  color: #ffffff;
+}
+.fancy-button:hover {
+  color: #ffffff;
+}
+.fancy-button:hover span {
+  filter: brightness(0.9) contrast(1.2);
+  transform: scale(0.96);
+}
+.fancy-button:hover:before {
+  bottom: 3px;
+  filter: blur(6px) brightness(0.8);
+}
+.fancy-button:active span {
+  filter: brightness(0.75) contrast(1.7);
+}
+.fancy-button.pop-onhover span {
+  border-radius: 4px;
+}
+.fancy-button.pop-onhover:before {
+  opacity: 0;
+  bottom: 10px;
+}
+.fancy-button.pop-onhover:hover:before {
+  bottom: -7px;
+  opacity: 1;
+  filter: blur(16px);
+}
+.fancy-button.pop-onhover:hover span {
+  transform: scale(1);
+}
+.fancy-button.pop-onhover:hover:active span {
+  filter: brightness(1) contrast(1);
+  transform: scale(1);
+  transition: all 0.2s ease-out;
+}
+.fancy-button.pop-onhover:hover:active:before {
+  bottom: 0;
+  filter: blur(5px) brightness(0.85);
+  transition: all 0.2s ease-out;
+}
