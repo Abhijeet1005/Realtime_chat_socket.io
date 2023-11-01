@@ -62,13 +62,18 @@ app.post('/login',async (req,res) => {
 });
 
 
-app.get('/chatpage/:username',(req,res) => {
+app.get('/chatpage/:username', (req, res) => {
   let passedEncUser = req.params.username;
-  let passedUser = decodeURIComponent(decryptText(passedEncUser,secret));
-  if(!passedEncUser){
-    res.redirect('login',{ errorMessage: "Wrong User" })
+  let passedUser = decryptText(decodeURIComponent(passedEncUser), secret);
+  if (!passedUser) {
+    res.redirect('../login');
+  } else {
+    if (fetchUser(passedUser) != null) {
+      res.render("chatpage", { user: passedUser });
+    } else {
+      res.redirect('../login');
+    }
   }
-  res.render("chatpage",{user : passedUser});
 });
 
 
