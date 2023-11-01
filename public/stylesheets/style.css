@@ -2,11 +2,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #252839;
+  background-image: url("../images/image.jpg");
+  background-size: cover;
 }
 
 #form {
-  background: #fff;
+  background: #ffffff00;
   padding: 1rem;
   position: fixed;
   bottom: 0;
@@ -57,7 +58,7 @@ body {
   padding: 1rem;
   margin: 0.5rem 30rem 0rem 30rem;
   background: #b8f4b8;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
 }
