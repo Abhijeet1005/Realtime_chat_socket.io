@@ -55,19 +55,19 @@ body {
 
 #messages > li {
   padding: 1rem;
-  margin: 0.5rem 0;
-  background: #fff;
+  margin: 0.5rem 30rem 0rem 30rem;
+  background: #b8f4b8;
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
 }
 
 #messages > li:nth-child(odd) {
-  background: #f5f5f5;
+  background: #b8f4b8;
 }
 
 #Home_button {
-  background: #007bff;
+  background: #98bec6;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 3px;
