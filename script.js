@@ -9,7 +9,6 @@ const { hashPassword, checkUser } = require('./utils/helpers')
 const { dbConnect } = require('./utils/model')
 const CryptoJS = require('crypto-js');
 const { fetchUser } = require('./utils/dbHandler');
-mongoose.set('strictQuery', true);
 let secret = process.env.SECRET_KEY//later will be moving this in .env
 
 // Encryption function
@@ -49,7 +48,7 @@ app.post('/login',async (req,res) => {
   let Username = req.body.username;
   let password = req.body.password;
   const user_check = await checkUser(Username,password) // awaits for the checkUser to verify credentials
-  let encUser = encryptText(Username,secret);
+  let encUser = encodeURIComponent(encryptText(Username,secret));
 
   if(user_check){
     console.log("User found and authenticated");
@@ -65,7 +64,7 @@ app.post('/login',async (req,res) => {
 
 app.get('/chatpage/:username',(req,res) => {
   let passedEncUser = req.params.username;
-  let passedUser = decryptText(passedEncUser,secret);
+  let passedUser = decodeURIComponent(decryptText(passedEncUser,secret));
   if(!passedEncUser){
     res.redirect('login',{ errorMessage: "Wrong User" })
   }
@@ -111,5 +110,3 @@ io.on('connection', (socket) => {
 server.listen(process.env.PORT,() => {
   console.log(`Listening on port ${process.env.PORT}`);
 });
-
-

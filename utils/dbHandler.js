@@ -1,5 +1,5 @@
 // I know this is some bad DB code, will correct it later on
-require('dotenv').config({ path: '../' });
+// require('dotenv').config({ path: '../' });
 const { UserModel } = require('./model');
 
 
