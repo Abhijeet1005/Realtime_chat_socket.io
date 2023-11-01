@@ -7,6 +7,22 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 const { hashPassword, checkUser } = require('./utils/helpers')
 const { dbConnect } = require('./utils/model')
+const CryptoJS = require('crypto-js');
+const { fetchUser } = require('./utils/dbHandler');
+let secret = process.env.SECRET_KEY//later will be moving this in .env
+
+// Encryption function
+function encryptText(text, secretKey) {
+  const encryptedText = CryptoJS.AES.encrypt(text, secretKey).toString();
+  return encryptedText;
+}
+
+// Decryption function
+function decryptText(encryptedText, secretKey) {
+  const bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
+  const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+  return decryptedText;
+}
 
 
 let message_list = []; //This can be replaced to store the messages in DB and fetch them on reloads
@@ -32,10 +48,11 @@ app.post('/login',async (req,res) => {
   let Username = req.body.username;
   let password = req.body.password;
   const user_check = await checkUser(Username,password) // awaits for the checkUser to verify credentials
+  let encUser = encryptText(Username,secret);
 
   if(user_check){
     console.log("User found and authenticated");
-    res.redirect(`chatpage/${Username}`);
+    res.redirect(`chatpage/${encUser}`);
     
   }
   else{
@@ -46,11 +63,12 @@ app.post('/login',async (req,res) => {
 
 
 app.get('/chatpage/:username',(req,res) => {
-  let passeduser = req.params.username;
-  if(!passeduser){
+  let passedEncUser = req.params.username;
+  let passedUser = decryptText(passedEncUser,secret);
+  if(!passedEncUser){
     res.redirect('login',{ errorMessage: "Wrong User" })
   }
-  res.render("chatpage",{user : passeduser});
+  res.render("chatpage",{user : passedUser});
 });
 
 
@@ -60,16 +78,24 @@ app.get('/signup',(req,res) => {
 
 
 app.post('/signup', async (req, res) => {
-  username = req.body.newUsername;
-  Password = req.body.newPassword;
-  confirmPassword = req.body.confirmPassword;
+  let username = req.body.newUsername;
+  let Password = req.body.newPassword;
+  let confirmPassword = req.body.confirmPassword;
 
-  if (Password == confirmPassword) {
-      await hashPassword(Password, username); // Wait for the password hashing to complete
+
+  if(await fetchUser(username) != null){
+    res.render('signup',{errorMessage: "User already exists, try another username"});
+  }else{
+
+    if (Password == confirmPassword) {
+      hashPassword(Password, username); // Wait for the password hashing to complete
       res.redirect('login');
-  } else {
-      res.render('signup', { errorMessage: "Passwords do not match!" });
+    } else {
+        res.render('signup', { errorMessage: "Passwords do not match!" });
+    }
   }
+  
+
 });
 
 
