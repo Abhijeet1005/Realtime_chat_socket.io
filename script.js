@@ -9,6 +9,7 @@ const { hashPassword, checkUser } = require('./utils/helpers')
 const { dbConnect } = require('./utils/model')
 const CryptoJS = require('crypto-js');
 const { fetchUser } = require('./utils/dbHandler');
+mongoose.set('strictQuery', true);
 let secret = process.env.SECRET_KEY//later will be moving this in .env
 
 // Encryption function
