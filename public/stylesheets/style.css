@@ -56,7 +56,7 @@ body {
 
 #messages > li {
   padding: 1rem;
-  margin: 0.5rem 30rem 0rem 30rem;
+  margin: 0.5rem 1rem;
   background: #b8f4b8;
   border-radius: 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
