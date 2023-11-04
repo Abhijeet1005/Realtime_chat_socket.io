@@ -1,6 +1,7 @@
 # Basic_realtime_chat_socket.io
 
-This project uses socketio to set up a real-time chat environment.
+This project uses socketio to set up a real-time chat environment.<br />
+(Not using sessions and cookies so that its easier to login multiple users on the same browser)
 
 User IDs and authentication (with duplicate user check) : ✅ <br />
 DB for storing users:  ✅ <br />
