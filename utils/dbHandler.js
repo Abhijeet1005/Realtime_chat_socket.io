@@ -1,12 +1,17 @@
-// I know this is some bad DB code, will correct it later on
 // require('dotenv').config({ path: '../' });
-const { UserModel } = require('./model');
+const { UserModel, RoomModel } = require('./model');
 
 
 async function storeUser(user, hash) {
     const newUser = new UserModel({ username: user, hash_password: hash });
         await newUser.save();
-        console.log('User stored successfully');
+        console.log(`user ${user} stored successfully`);
+}
+
+async function addRoom(name){
+    const newRoom = new RoomModel({room_name: name, messages: []}) // This makes a new room when called and stores an empty array for messages
+    await newRoom.save();
+    console.log(`New room with ${name} as name created`) 
 }
 
 async function fetchUser(user) {
