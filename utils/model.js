@@ -12,7 +12,7 @@ const dbConnect = async function(){
     
 }
 
-const MessageSchema = new mongoose.Schema({
+const RoomSchema = new mongoose.Schema({
   room_name: String,
   messages: [String],
 })
@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
     
 });
 
-const RoomModel = mongoose.model('rooms',MessageSchema);  //collection for creating rooms, no need for now but will be needed in future when we need to make rooms through app
+const RoomModel = mongoose.model('rooms',RoomSchema);  //collection for creating rooms, no need for now but will be needed in future when we need to make rooms through app
 const UserModel = mongoose.model('users', UserSchema);
 
 module.exports = {

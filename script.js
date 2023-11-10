@@ -8,8 +8,8 @@ const io = new Server(server);
 const { hashPassword, checkUser } = require('./utils/helpers')
 const { dbConnect } = require('./utils/model')
 const CryptoJS = require('crypto-js');
-const { fetchUser } = require('./utils/dbHandler');
-let secret = process.env.SECRET_KEY//later will be moving this in .env
+const { fetchUser,getMessages,addRoom } = require('./utils/dbHandler');
+let secret = process.env.SECRET_KEY
 
 // Encryption function
 function encryptText(text, secretKey) {
@@ -24,8 +24,20 @@ function decryptText(encryptedText, secretKey) {
   return decryptedText;
 }
 
+let messages_fetch = async function() {
+  try {
+    // Await the result of the getMessages function
+    let roomData = await getMessages('main');
+    
+    return roomData.messages; 
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+  }
+};
 
-let message_list = []; //This can be replaced to store the messages in DB and fetch them on reloads
+let message_list = messages_fetch();
+
+
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -105,8 +117,10 @@ app.post('/signup', async (req, res) => {
 
 
 
-io.on('connection', (socket) => {
+io.on('connection',(socket) => {
+  
   socket.on('chat message', (message) => {
+    
     message_list.push(message);
     io.emit('chatmessage_return', message_list);
   });
