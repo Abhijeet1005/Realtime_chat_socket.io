@@ -24,18 +24,10 @@ function decryptText(encryptedText, secretKey) {
   return decryptedText;
 }
 
-let messages_fetch = async function() {
-  try {
-    // Await the result of the getMessages function
-    let roomData = await getMessages('main');
-    
-    return roomData.messages; 
-  } catch (error) {
-    console.error('Error fetching messages:', error);
-  }
-};
+//getmessages(rname) -> rname.messages -> [] -> message list
 
-let message_list = messages_fetch();
+
+
 
 
 
