@@ -25,11 +25,7 @@ function decryptText(encryptedText, secretKey) {
 }
 
 //getmessages(rname) -> rname.messages -> [] -> message list
-
-
-
-
-
+message_list = [];
 
 app.use(express.urlencoded({ extended: true }));
 
