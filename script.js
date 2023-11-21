@@ -1,15 +1,19 @@
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 const { hashPassword, checkUser } = require('./utils/helpers')
-const { dbConnect } = require('./utils/model')
 const CryptoJS = require('crypto-js');
-const { fetchUser,getMessages,addRoom } = require('./utils/dbHandler');
-let secret = process.env.SECRET_KEY
+const { fetchUser,addRoom } = require('./utils/dbHandler');
+const { UserModel, RoomModel } = require('./utils/model');
+const session = require('express-session');
+const cookie = require('cookie-parser');
+const cookieParser = require('cookie-parser');
+let secret = process.env.SECRETKEY
 
 // Encryption function
 function encryptText(text, secretKey) {
@@ -24,16 +28,26 @@ function decryptText(encryptedText, secretKey) {
   return decryptedText;
 }
 
-//getmessages(rname) -> rname.messages -> [] -> message list
-message_list = [];
-
-app.use(express.urlencoded({ extended: true }));
-
-app.set("view engine","ejs");
-app.use(express.static('./public'));
+const dbConnect = async function(){ 
+  try {
+      await mongoose.connect(process.env.MONGODBURI);
+      console.log("DB connected")
+    
+    } catch (err) {
+      console.error('Error connecting to DB', err);
+    }
+  
+}
+let room = 'main' //this decided the room being used for the chat from the server side on initial connect
 
 dbConnect()
+addRoom(room)
 
+
+app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine","ejs");
+app.use(express.static('./public'));
 app.get('/',(req,res) => {
     res.render("auth");
 });
@@ -63,12 +77,15 @@ app.post('/login',async (req,res) => {
 
 
 app.get('/chatpage/:username', (req, res) => {
+  
   let passedEncUser = req.params.username;
   let passedUser = decryptText(decodeURIComponent(passedEncUser), secret);
   if (!passedUser) {
     res.redirect('../login');
   } else {
     if (fetchUser(passedUser) != null) {
+      res.cookie({"roomInUse": 'main'})  //creates a deault room cookie for every socket connection(when it .get()s the chatpage)
+      
       res.render("chatpage", { user: passedUser });
     } else {
       res.redirect('../login');
@@ -104,15 +121,19 @@ app.post('/signup', async (req, res) => {
 });
 
 
+io.on('connection', async (socket) => {
 
-io.on('connection',(socket) => {
-  
-  socket.on('chat message', (message) => {
+  // check for same cookie for diff sockets on the same browser -- try socket io inbuilt cookie store for different sockets
+  socket.on('chat message', async (message) => {
     
-    message_list.push(message);
-    io.emit('chatmessage_return', message_list);
+    const user = await RoomModel.findOne({ room_name: room });
+    user.messages.push(message)
+    user.save()
+    messages = user.messages
+    io.emit('chatmessage_return', messages);
   });
 });
+
 
 server.listen(process.env.PORT,() => {
   console.log(`Listening on port ${process.env.PORT}`);

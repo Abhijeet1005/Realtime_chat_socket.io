@@ -1,4 +1,3 @@
-// require('dotenv').config({ path: '../' });
 const { UserModel, RoomModel } = require('./model');
 
 
@@ -9,19 +8,13 @@ async function storeUser(user, hash) {
 }
 
 async function addRoom(name){
-    const roomCheck = await getMessages(name);
+    const roomCheck = await RoomModel.findOne({room_name: name});
     if(!roomCheck){
         const newRoom = new RoomModel({room_name: name, messages: []}) // This makes a new room when called and stores an empty array for messages
         await newRoom.save();
         console.log(`New room with ${name} as name created`) 
     }
 
-}
-
-async function getMessages(Rname){
-    const roomData = await RoomModel.findOne({ room_name: Rname });
-    return roomData.messages;
-    
 }
 
 async function fetchUser(user) {
@@ -35,4 +28,4 @@ async function fetchUser(user) {
 
 }
 
-module.exports = { storeUser, fetchUser, addRoom, getMessages };
+module.exports = { storeUser, fetchUser, addRoom };

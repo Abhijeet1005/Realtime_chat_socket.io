@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 require('dotenv').config({ path: '../' });
 
-const dbConnect = async function(){
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log("DB connected")
+// const dbConnect = async function(){
+//     try {
+//         await mongoose.connect(process.env.MONGODB_URI);
+//         console.log("DB connected")
       
-      } catch (err) {
-        console.error('Error connecting to DB', err);
-      }
+//       } catch (err) {
+//         console.error('Error connecting to DB', err);
+//       }
     
-}
+// }
 
 const RoomSchema = new mongoose.Schema({
   room_name: String,
@@ -28,6 +28,5 @@ const UserModel = mongoose.model('users', UserSchema);
 
 module.exports = {
     UserModel,
-    dbConnect,
     RoomModel,
   };
