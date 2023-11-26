@@ -122,17 +122,24 @@ app.post('/signup', async (req, res) => {
 
 
 io.on('connection', async (socket) => {
+  // Retrieve existing messages from the database
+  const fetchedRoom = await RoomModel.findOne({ room_name: room });
+  const messages = fetchedRoom.messages;
 
-  // check for same cookie for diff sockets on the same browser -- try socket io inbuilt cookie store for different sockets
+  // Send existing messages to the connected user
+  socket.emit('chatmessage_return', messages);
+
+  // Handle new chat messages
   socket.on('chat message', async (message) => {
-    
-    const user = await RoomModel.findOne({ room_name: room });
-    user.messages.push(message)
-    user.save()
-    messages = user.messages
-    io.emit('chatmessage_return', messages);
+    // Save the new message to the database
+    fetchedRoom.messages.push(message);
+    fetchedRoom.save();
+
+    // Broadcast the new message to all connected clients
+    io.emit('chatmessage_return', fetchedRoom.messages);
   });
 });
+
 
 
 server.listen(process.env.PORT,() => {
