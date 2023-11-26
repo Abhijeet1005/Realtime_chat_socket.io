@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config({ path: '../' });
+mongoose.set('strictQuery', true);
 
 // const dbConnect = async function(){
 //     try {
